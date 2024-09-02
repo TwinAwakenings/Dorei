@@ -1,0 +1,30 @@
+{
+  "name": "dorei",
+  "version": "0.0.1",
+  "description": "Discord bot made using typescript and node",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts --dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TwinAwakenings/Dorei.git"
+  },
+  "keywords": [
+    "bot",
+    "discord.js",
+    "typescript"
+  ],
+  "author": "TwinAwakenings",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TwinAwakenings/Dorei/issues"
+  },
+  "homepage": "https://github.com/TwinAwakenings/Dorei#readme",
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "ts-node": "^10.9.2"
+  }
+}
