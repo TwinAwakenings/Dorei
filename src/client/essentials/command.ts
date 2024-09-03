@@ -1,9 +1,9 @@
-import { ApplicationCommandOption, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
+import { ApplicationCommandOption, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, PermissionResolvable } from "discord.js";
 import { Category } from "../../enums/Category";
 import { Dorei_Client, IDorei_Client } from "../client";
 
 
-export class Command implements ICommand {
+export default class Command implements ICommand {
     client: IDorei_Client
     name: string
     description: string
@@ -16,8 +16,6 @@ export class Command implements ICommand {
     enabled?: boolean | undefined
     dm_permission?: boolean | undefined
     nsfw?: boolean | undefined
-    requiredClientPermissions?: string[] | undefined
-    requiredUserPermissions?: string[] | undefined
 
     constructor(client: Dorei_Client, options: IClientCommandOptions) {
         this.client = client
@@ -32,8 +30,6 @@ export class Command implements ICommand {
         this.enabled = options.enabled
         this.dm_permission = options.dm_permission
         this.nsfw = options.nsfw
-        this.requiredClientPermissions = options.requiredClientPermissions
-        this.requiredUserPermissions = options.requiredUserPermissions
     }
 
     async execute(interaction: ChatInputCommandInteraction) {
@@ -57,8 +53,6 @@ export interface IClientCommandOptions {
     enabled?: boolean | undefined
     dm_permission?: boolean | undefined
     nsfw?: boolean | undefined
-    requiredClientPermissions?: string[] | undefined
-    requiredUserPermissions?: string[] | undefined
 }
 
 export interface ICommandOptions {
@@ -85,8 +79,6 @@ export interface ICommand {
     enabled?: boolean | undefined
     dm_permission?: boolean | undefined
     nsfw?: boolean | undefined
-    requiredClientPermissions?: string[] | undefined
-    requiredUserPermissions?: string[] | undefined
 
     execute(interaction: ChatInputCommandInteraction)
     autoComplete(interaction: AutocompleteInteraction)

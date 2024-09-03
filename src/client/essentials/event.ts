@@ -14,9 +14,13 @@ export class Event implements IEvent {
         this.once = options.once ?? false
         this.enabled = options.enabled ?? true
     }
+
+    async execute(...args: any)  {
+        
+    }
 }
 
-interface IEvent {
+export interface IEvent {
     client: Dorei_Client
     name: Events
     description: string
@@ -24,7 +28,7 @@ interface IEvent {
     enabled?: boolean | undefined
 }
 
-interface IClientEventOptions {
+export interface IClientEventOptions {
     name: Events
     description: string
     once?: boolean | undefined
