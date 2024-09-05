@@ -4,6 +4,7 @@ import Command from "./essentials/command";
 import SubCommand from "./essentials/subCommand"
 import { CommandHandler } from "./handlers/commandHandler";
 import { EventHandler } from "./handlers/eventHandler";
+import { database } from "./essentials/db"
 
 
 export class Dorei_Client extends Client implements IDorei_Client {
@@ -13,6 +14,7 @@ export class Dorei_Client extends Client implements IDorei_Client {
     public cooldowns: Collection<string, Collection<string, number>>
     public commandHandler: CommandHandler
     public eventHandler: EventHandler
+    public database: typeof database
 
     constructor() {
         super({
@@ -49,6 +51,9 @@ export class Dorei_Client extends Client implements IDorei_Client {
         this.eventHandler = new EventHandler(this)
         this.commandHandler.LoadCommands()
         this.eventHandler.LoadEvents()
+        this.database = database
+
+        
         
     }    
     

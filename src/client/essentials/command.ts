@@ -4,7 +4,7 @@ import { Dorei_Client, IDorei_Client } from "../client";
 
 
 export default class Command implements ICommand {
-    client: IDorei_Client
+    client: Dorei_Client
     name: string
     description: string
     detailedDescription?: string | undefined

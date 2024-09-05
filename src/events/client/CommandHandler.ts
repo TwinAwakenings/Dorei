@@ -21,6 +21,10 @@ export default class CommandHandler extends Event {
 
             if (!command) return interaction.reply({ content: "This command does not exist!", ephemeral: true }) && this.client.commands.delete(interaction.commandName)
 
+
+            if (interaction.channel.isDMBased() && !command.dm_permission) {
+                return interaction.reply({ content: "This command can only be used in a server!", ephemeral: true })
+            }
             const isNSFW = interaction.channel.type === ChannelType.GuildText && interaction.channel.nsfw
             if(command.nsfw && !isNSFW) return interaction.reply({ content: "This command can only be used in NSFW channels!", ephemeral: true })
 
@@ -73,4 +77,5 @@ export default class CommandHandler extends Event {
                 console.error(error);
             }
         }
-    }}
+    }
+}
