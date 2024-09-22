@@ -10,7 +10,8 @@ const config = {
             }
         },
         server: "1015277694415548467",
-        channel: "1225128045417988176"
+        channel: "1225128045417988176",
+        testForum: "1237467577446301697"
     },
     
     main: {
@@ -22,7 +23,8 @@ const config = {
             }
         }
     },
-    owner: "655856108350603267"
+    owner: "655856108350603267" as string,
+    mainServer: "704765614627094589"
 }
 
 export default config

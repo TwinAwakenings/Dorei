@@ -21,7 +21,23 @@ export default class CommandHandler extends Event {
 
             if (!command) return interaction.reply({ content: "This command does not exist!", ephemeral: true }) && this.client.commands.delete(interaction.commandName)
 
+            
+            if (!interaction.memberPermissions.has(PermissionFlagsBits.Administrator)) {
+                if (interaction.memberPermissions.has(command.userPermissions)) {
+                    return interaction.reply({ content: "You dont have required permissions to use this command.", ephemeral: true })
+                }
+            }
 
+            const botMember = interaction.guild.members.cache.get(this.client.user.id)
+            
+            if (!botMember.permissions.has(PermissionFlagsBits.AddReactions)) {
+                if (!botMember.permissions.has(command.clientPermissions)) {
+
+                    return interaction.reply({ content: "I dont have required permissions to use this command.", ephemeral: true })
+                }
+            }
+        
+        
             if (interaction.channel.isDMBased() && !command.dm_permission) {
                 return interaction.reply({ content: "This command can only be used in a server!", ephemeral: true })
             }

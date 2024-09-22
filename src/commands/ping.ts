@@ -1,7 +1,8 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits, PermissionsBitField } from "discord.js";
 import { Dorei_Client } from "../client/client";
 import Command from "../client/essentials/command";
 import client from "..";
+import config from "../config";
 
 export default class pingCommand extends Command {
     constructor(client: Dorei_Client) {
@@ -11,10 +12,11 @@ export default class pingCommand extends Command {
             dev: client.dev,
             cooldown: 5,
             dm_permission: true,
-            //cooldownFilteredUsers: ["655856108350603267"]
+            cooldownFilteredUsers: [config.owner],
+            clientPermissions: [PermissionFlagsBits.SendMessages],
+            userPermissions: [PermissionFlagsBits.SendMessages, PermissionFlagsBits.UseApplicationCommands]
         })
     }
-    
     async execute(interaction: ChatInputCommandInteraction) {
         interaction.reply({ content: "Pong!", ephemeral: true })
     }

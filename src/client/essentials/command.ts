@@ -1,4 +1,4 @@
-import { ApplicationCommandOption, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, PermissionResolvable } from "discord.js";
+import { PermissionFlagsBits, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, PermissionResolvable, PermissionsBitField, PermissionFlags } from "discord.js";
 import { Category } from "../../enums/Category";
 import { Dorei_Client, IDorei_Client } from "../client";
 
@@ -16,6 +16,8 @@ export default class Command implements ICommand {
     enabled?: boolean | undefined
     dm_permission?: boolean | undefined
     nsfw?: boolean | undefined
+    userPermissions?: PermissionResolvable | undefined
+    clientPermissions?: PermissionResolvable | undefined
 
     constructor(client: Dorei_Client, options: IClientCommandOptions) {
         this.client = client
@@ -30,13 +32,15 @@ export default class Command implements ICommand {
         this.enabled = options.enabled
         this.dm_permission = options.dm_permission
         this.nsfw = options.nsfw
+        this.userPermissions = options.userPermissions
+        this.clientPermissions = options.clientPermissions
     }
 
-    async execute(interaction: ChatInputCommandInteraction) {
+    execute(interaction: ChatInputCommandInteraction) {
         
     }
 
-    async autoComplete(interaction: AutocompleteInteraction) {
+    autoComplete(interaction: AutocompleteInteraction) {
 
     }
 }
@@ -53,12 +57,14 @@ export interface IClientCommandOptions {
     enabled?: boolean | undefined
     dm_permission?: boolean | undefined
     nsfw?: boolean | undefined
+    userPermissions?: PermissionResolvable | undefined
+    clientPermissions?: PermissionResolvable | undefined
 }
 
 export interface ICommandOptions {
     name: string
     description: string
-    type: ApplicationCommandOptionType[]
+    type: ApplicationCommandOptionType
     required: boolean
     choices?: {
         name: string
@@ -79,6 +85,8 @@ export interface ICommand {
     enabled?: boolean | undefined
     dm_permission?: boolean | undefined
     nsfw?: boolean | undefined
+    userPermissions?: PermissionResolvable | undefined
+    clientPermissions?: PermissionResolvable | undefined
 
     execute(interaction: ChatInputCommandInteraction)
     autoComplete(interaction: AutocompleteInteraction)
