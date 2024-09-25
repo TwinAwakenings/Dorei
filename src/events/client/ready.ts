@@ -1,9 +1,10 @@
-import { Collection, Events, PresenceStatusData, REST, Routes } from "discord.js";
+import { Collection, Events, PresenceStatusData, Routes } from "discord.js";
 import {Event} from "../../client/essentials/event"
 import { Dorei_Client } from "../../client/client";
 import config from "../../config"
 import Command, { IClientCommandOptions } from "../../client/essentials/command";
 import chalk from "chalk"
+import { REST } from "@discordjs/rest"
 
 export default class Ready extends Event {
     constructor(client: Dorei_Client) {
