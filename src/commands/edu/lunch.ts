@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, EmbedBuilder, PermissionFlagsBits, TextChannel } from "discord.js"
-import { Dorei_Client } from "../../client/client"
+import { shiro_Client } from "../../client/client"
 import Command from "../../client/essentials/command"
 import { Category } from "../../enums/Category"
 import fs from "fs"
@@ -10,7 +10,7 @@ import client from "../.."
 
 
 export default class LunchCommand extends Command {
-    constructor(client: Dorei_Client) {
+    constructor(client: shiro_Client) {
         super(client, {
             name: "lunch",
             description: "Shows lunch menu for current week",
@@ -136,7 +136,7 @@ interface IDay {
 }
 
 
-async function sendWeekly(guildId: string, channel: string, client: Dorei_Client) {
+async function sendWeekly(guildId: string, channel: string, client: shiro_Client) {
     const lastWeek = fs.readFileSync(path.join(__dirname, "lastWeek.txt"), "utf-8")
 
 
@@ -169,4 +169,4 @@ async function sendWeekly(guildId: string, channel: string, client: Dorei_Client
     }, 1000 * 60 * 60 * 4 /*should be 4 hrs*/ )
 }
 
-sendWeekly("704765614627094589", "1280123327507337281", client)
+sendWeekly(config.commands.lunch.sendWeeklyGuild, config.commands.lunch.sendWeeklyChannel, client)

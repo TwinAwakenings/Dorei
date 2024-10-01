@@ -1,13 +1,13 @@
 import { Events } from "discord.js";
-import { Dorei_Client } from "../client";
+import { shiro_Client } from "../client";
 
 export class Event implements IEvent {
-    client: Dorei_Client;
+    client: shiro_Client;
     name: Events;
     description: string;
     once: boolean;
     enabled: boolean;
-    constructor(client: Dorei_Client, options: IClientEventOptions) {
+    constructor(client: shiro_Client, options: IClientEventOptions) {
         this.client = client
         this.name = options.name
         this.description = options.description
@@ -21,7 +21,7 @@ export class Event implements IEvent {
 }
 
 export interface IEvent {
-    client: Dorei_Client
+    client: shiro_Client
     name: Events
     description: string
     once?: boolean | undefined

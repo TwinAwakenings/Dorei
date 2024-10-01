@@ -1,13 +1,13 @@
 import { ChatInputCommandInteraction } from "discord.js";
-import { Dorei_Client } from "../client";
+import { shiro_Client } from "../client";
 
 
 export default class SubCommand implements ISubCommand {
-    client: Dorei_Client;
+    client: shiro_Client;
     name: string;
     enabled: boolean | undefined;
 
-    constructor(client: Dorei_Client, options: IClientSubCommandOptions) {
+    constructor(client: shiro_Client, options: IClientSubCommandOptions) {
         this.client = client
         this.name = options.name
         this.enabled = options.enabled ?? true
@@ -24,7 +24,7 @@ export interface IClientSubCommandOptions {
 }
 
 export interface ISubCommand {
-    client: Dorei_Client
+    client: shiro_Client
     name: string
     enabled: boolean | undefined
 

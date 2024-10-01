@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "presence": {
+      "status": "online",
+      "activity": {
+        "name": "Dev",
+        "type": 0
+      }
+    }
+  },
+  "prod": {
+    "presence": {
+      "status": "online",
+      "activity": {
+        "name": "Prod",
+        "type": 0
+      }
+    }
+  }
+}

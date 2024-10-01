@@ -1,13 +1,13 @@
-import { Dorei_Client } from "../client";
+import { shiro_Client } from "../client";
 import path from "path"
 import { Event } from "../essentials/event"
 import { glob } from "glob"
 
 
 export class EventHandler implements IEventHandler {
-    client: Dorei_Client
+    client: shiro_Client
 
-    constructor(client: Dorei_Client) {
+    constructor(client: shiro_Client) {
         this.client = client
     }
 

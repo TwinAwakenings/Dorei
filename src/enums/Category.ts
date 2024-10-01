@@ -4,5 +4,6 @@ export enum Category {
     Fun = "Fun",
     Moderation = "Moderation",
     Owner = "Owner",
-    Edu = "Edu"
+    Edu = "Edu",
+    Dev = "Dev"
 }

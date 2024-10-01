@@ -1,5 +1,5 @@
-import { Dorei_Client } from "./client/client";
+import { shiro_Client } from "./client/client";
 
-const client = new Dorei_Client()
+const client = new shiro_Client()
 client.login()
 export default client

@@ -1,13 +1,13 @@
-import { Collection, Events, PresenceStatusData, Routes } from "discord.js";
+import { ActivityType, Collection, Events, PresenceStatusData, Routes } from "discord.js";
 import {Event} from "../../client/essentials/event"
-import { Dorei_Client } from "../../client/client";
+import { shiro_Client } from "../../client/client";
 import config from "../../config"
 import Command, { IClientCommandOptions } from "../../client/essentials/command";
 import chalk from "chalk"
 import { REST } from "@discordjs/rest"
 
 export default class Ready extends Event {
-    constructor(client: Dorei_Client) {
+    constructor(client: shiro_Client) {
         super(client, {
             name: Events.ClientReady,
             description: "Ready event",
@@ -17,10 +17,24 @@ export default class Ready extends Event {
     async execute() {
         console.log(chalk.green(`${chalk.cyan(this.client.user?.tag)} is now ${chalk.blueBright("ready")} in ${chalk.white(this.client.dev ? "development" : "production")} mode`))
         
-        const presence = this.client.user?.presence;
-        if(presence) console.log(chalk.yellow(`Presence: "${presence?.activities[0]?.name}" Status: ${presence?.status}`))
+        //set presence
+
+        this.client.user.setPresence({
+            status: this.client.dev ? config.dev.presence.status as PresenceStatusData : config.main.presence.status as PresenceStatusData,
+
+            activities: [
+                {
+                    name: this.client.dev ? config.dev.presence.activity.name : config.main.presence.activity.name,
+                    type: this.client.dev ? config.dev.presence.activity.type as ActivityType : config.main.presence.activity.type as ActivityType
+                }
+            ]
+        })
 
 
+        const presence = this.client.user.presence;
+        if(presence.activities.length > 0) console.log(chalk.yellow(`Presence: "${presence?.activities[0]?.name}" Status: ${presence?.status}`))
+
+            
         const clientId = this.client.user?.id ?? ""
         const rest = new REST().setToken(this.client.dev ? (process.env.dev_bot_token ?? "") : (process.env.bot_token ?? ""));
 

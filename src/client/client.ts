@@ -7,7 +7,7 @@ import { EventHandler } from "./handlers/eventHandler";
 import { database } from "./essentials/db"
 
 
-export class Dorei_Client extends Client implements IDorei_Client {
+export class shiro_Client extends Client implements Ishiro_Client {
     public dev: boolean
     public commands: Collection<string, Command> 
     public subCommands: Collection<string, SubCommand>
@@ -65,6 +65,6 @@ export class Dorei_Client extends Client implements IDorei_Client {
 
 
 
-export interface IDorei_Client {
+export interface Ishiro_Client {
     dev: boolean
 }

@@ -1,13 +1,13 @@
 import { AutocompleteInteraction, ChannelType, ChatInputCommandInteraction, Collection, Events, GuildChannel, GuildTextBasedChannel, PermissionFlagsBits } from "discord.js"
-import { Dorei_Client } from "../../client/client"
+import { shiro_Client } from "../../client/client"
 import {Event} from "../../client/essentials/event"
 import Command from "../../client/essentials/command"
 import chalk from "chalk"
-import config from "../../config"
+
 
 export default class CommandHandler extends Event {
 
-    constructor(client: Dorei_Client) {
+    constructor(client: shiro_Client) {
         super(client, {
             name: Events.InteractionCreate,
             description: "Command Handler event",

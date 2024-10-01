@@ -1,10 +1,10 @@
-import { PermissionFlagsBits, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, PermissionResolvable, PermissionsBitField, PermissionFlags } from "discord.js";
+import { PermissionFlagsBits, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, PermissionResolvable, PermissionsBitField, PermissionFlags, Activity, ActivityType } from "discord.js";
 import { Category } from "../../enums/Category";
-import { Dorei_Client, IDorei_Client } from "../client";
+import { shiro_Client, Ishiro_Client } from "../client";
 
 
 export default class Command implements ICommand {
-    client: Dorei_Client
+    client: shiro_Client
     name: string
     description: string
     detailedDescription?: string | undefined
@@ -19,7 +19,7 @@ export default class Command implements ICommand {
     userPermissions?: PermissionResolvable | undefined
     clientPermissions?: PermissionResolvable | undefined
 
-    constructor(client: Dorei_Client, options: IClientCommandOptions) {
+    constructor(client: shiro_Client, options: IClientCommandOptions) {
         this.client = client
         this.name = options.name
         this.description = options.description
@@ -68,12 +68,12 @@ export interface ICommandOptions {
     required: boolean
     choices?: {
         name: string
-        value: string
+        value: string | ActivityType
     }[]
 }
 
 export interface ICommand {
-    client: IDorei_Client
+    client: shiro_Client
     name: string
     description: string
     detailedDescription?: string | undefined

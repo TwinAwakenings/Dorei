@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, ChatInputCommandInteraction, EmbedBuilder, ForumChannel, PermissionFlagsBits, TextChannel, ThreadChannel } from "discord.js";
-import { Dorei_Client } from "../../client/client";
+import { shiro_Client } from "../../client/client";
 import Command from "../../client/essentials/command";
 import config from "../../config";
 import { Category } from "../../enums/Category";
@@ -8,10 +8,8 @@ import "dotenv/config"
 import fs from "fs"
 import download from "download"
 
-
-
 export default class HomeWorkCommand extends Command {
-    constructor(client: Dorei_Client) {
+    constructor(client: shiro_Client) {
         super(client, {
             name: "homework",
             description: "Check if homework exists",

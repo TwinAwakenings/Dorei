@@ -1,14 +1,14 @@
 import { glob } from "glob";
-import { Dorei_Client } from "../client";
+import { shiro_Client } from "../client";
 import path from "path"
 import Command from "../essentials/command";
 import SubCommand from "../essentials/subCommand";
 
 
 export class CommandHandler implements ICommandHandler {
-    client: Dorei_Client
+    client: shiro_Client
 
-    constructor(client: Dorei_Client) {
+    constructor(client: shiro_Client) {
         this.client = client
     }
 
@@ -28,6 +28,7 @@ export class CommandHandler implements ICommandHandler {
                 
                 if (command.enabled === undefined) command.enabled = true
                 if(!command.enabled) return;
+                
 
                 if (file.split("/").pop()?.split(".")[2] !== undefined) {
                     this.client.subCommands.set(command.name, command as SubCommand);
