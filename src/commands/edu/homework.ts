@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ChatInputCommandInteraction, EmbedBuilder, ForumChannel, PermissionFlagsBits, TextChannel, ThreadChannel } from "discord.js";
+import { ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, EmbedBuilder, ForumChannel, PermissionFlagsBits, TextChannel, ThreadChannel } from "discord.js";
 import { shiro_Client } from "../../client/client";
 import Command from "../../client/essentials/command";
 import config from "../../config";
@@ -28,10 +28,44 @@ export default class HomeWorkCommand extends Command {
                     required:  false,
                     type: ApplicationCommandOptionType.Boolean,
 
+                },
+                {
+                    name: "remove",
+                    description: "Removes homework from database using homework superid",
+                    required:  false,
+                    type: ApplicationCommandOptionType.String,
+                    autocomplete: true
                 }
             ]
 
         })
+    }
+
+    async autoComplete(interaction: AutocompleteInteraction) {
+        const focused = interaction.options.getFocused(true)
+
+        if(focused.name == "remove") {
+            const hw = await this.client.database.homeworkExists.findMany()
+            let choices = []
+
+            hw.forEach(item => {
+                choices.push({ name: item.title, id: item.homeWorkId })
+            })
+            
+            //if array is longer than 25 split it
+            let options
+            if (choices.length > 25) {
+                options = choices.slice(0, 25)
+            } else {
+                options = choices
+            }
+
+            const response = options.map(choice => ({ name: `${choice.id}`, value: choice.id }))
+            await interaction.respond(response).catch(() => null)
+
+        } 
+
+
     }
 
     async execute(interaction: ChatInputCommandInteraction) {
@@ -59,6 +93,12 @@ export default class HomeWorkCommand extends Command {
                 await interaction.followUp(chunk);
             }
             return
+        }
+
+        const homeworkId = interaction.options.getString("remove")
+        if (homeworkId) {
+            await this.client.database.homeworkExists.delete({ where: { homeWorkId: homeworkId } })
+            return interaction.editReply("Homework removed from database.")
         }
 
         const subjectChannels = {
@@ -177,9 +217,9 @@ export default class HomeWorkCommand extends Command {
                 .setColor("Random")
                 .setTitle(`Id: ${materialData.testid} SuperId: ${hw.superId}`)
                 .setAuthor({ name: `${teacherIdToName[materialData.author.toString()]}` })
-                .setDescription(`\n${hw.title}`)
+                .setDescription(`\n${hw.title}\n cardIds: ${materialData.cardids.toString()}`)
                 .setFooter({ text: materialData.timestamp.split(" ")[0] })
-
+            
 
             const forumChall: ThreadChannel = await forum.threads.create({
                 name: title,
@@ -195,8 +235,14 @@ export default class HomeWorkCommand extends Command {
             const files: { src: string; name: string }[] = [];
             const videos: string[] = []
 
+
             for (const id of materialData.cardids) {
-                const data = materialData.cardsData[id]
+                const data = await materialData.cardsData[id]
+                //console.log(data)
+                if (!data) {
+                    console.log(`No data for id: ${id}`);
+                    continue;
+                }
                 const homeworkData: QuestionETestWidget = await JSON.parse(data.content)
 
                 for (const widget of homeworkData.widgets) {
@@ -274,11 +320,8 @@ export default class HomeWorkCommand extends Command {
             for (const str of this.removeDuplicateYouTubeLinks([...text, ...videos])) {
                 if (str.length === 0) continue;
 
-                const embed1 = new EmbedBuilder()
-                    .setColor("Random")
-                    .setTimestamp()
-                    .setDescription(str + ".")
-                await messageChannel.send({ embeds: [embed1] }).catch(err => {
+                
+                await messageChannel.send({ content: str }).catch(err => {
                     console.error(err);
                     return
                 });

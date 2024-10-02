@@ -66,6 +66,7 @@ export interface ICommandOptions {
     description: string
     type: ApplicationCommandOptionType
     required: boolean
+    autocomplete?: boolean | undefined
     choices?: {
         name: string
         value: string | ActivityType

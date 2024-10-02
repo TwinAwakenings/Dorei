@@ -14,7 +14,7 @@ export default class devSetPresenceCommand extends Command {
             description: "Sets the bot's presence",
             category: Category.Dev,
             dm_permission: true,
-            enabled: client.dev,
+            enabled: true,
             cooldown: 30,
             userPermissions: ["Administrator"],
             dev: true,

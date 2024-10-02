@@ -5,6 +5,7 @@ import SubCommand from "./essentials/subCommand"
 import { CommandHandler } from "./handlers/commandHandler";
 import { EventHandler } from "./handlers/eventHandler";
 import { database } from "./essentials/db"
+import client from "..";
 
 
 export class shiro_Client extends Client implements Ishiro_Client {
@@ -68,3 +69,8 @@ export class shiro_Client extends Client implements Ishiro_Client {
 export interface Ishiro_Client {
     dev: boolean
 }
+
+
+process.on("uncaughtException", (error) => {
+    console.log(error)
+})
