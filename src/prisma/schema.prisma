@@ -17,5 +17,5 @@ model homeworkExists {
 
 model nicknameProtection {
   userId String @id
-  
+  guildId String
 }

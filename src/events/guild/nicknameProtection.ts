@@ -15,28 +15,32 @@ export default class nicknameProtectionEvent extends Event {
     }
 
     async execute(oldMember: GuildMember, newMember: GuildMember) {
-        if ((newMember.nickname !== oldMember.nickname) && (newMember.user.bot == false)) {
-            const db = this.client.database.nicknameProtection
+        try {
+            if ((newMember.nickname !== oldMember.nickname) && (newMember.user.bot == false)) {
+                const db = this.client.database.nicknameProtection
 
-            const data = await db.findMany({where: {userId: newMember.user.id}})
+                const data = await db.findMany({where: {userId: newMember.user.id, guildId: newMember.guild.id}})
 
 
-            if (data.some(user => user.userId === newMember.user.id )) {
-                const audit = await newMember.guild.fetchAuditLogs({
-                    limit: 1,
-                    type: AuditLogEvent.MemberUpdate,
-                })
+                if (data.some(user => user.userId === newMember.user.id )) {
+                    const audit = await newMember.guild.fetchAuditLogs({
+                        limit: 1,
+                        type: AuditLogEvent.MemberUpdate,
+                    })
 
-                if(audit.entries.first().executor.id == this.client.user.id) {
-                    return
-                }
-                
-                if (audit.entries.first().executor.id !== newMember.user.id) {
-                    newMember.setNickname(oldMember.nickname)
-                    await audit.entries.first().executor.send({content: `You tried to change **${newMember.user.username}'s** nickname to **${newMember.nickname}** but you got blocked by the nickname protection system. \nDm <@${config.owner}> to get added/removed from the list.\n https://tenor.com/view/twenty-century-fox-meme-gfy-go-fuck-yourself-meme-get-lost-gif-26260205`})
-                    await newMember.user.send(`${audit.entries.first().executor.username} tried to change your nickname to **${newMember.nickname}** but got blocked by the nickname protection system.`)
+                    if(audit.entries.first().executor.id == this.client.user.id) {
+                        return
+                    }
+                    
+                    if (audit.entries.first().executor.id !== newMember.user.id) {
+                        newMember.setNickname(oldMember.nickname)
+                        await audit.entries.first().executor.send({content: `[${newMember.guild.name}]\nYou tried to change **${newMember.user.username}'s** nickname to **${newMember.nickname}** but you got blocked by the nickname protection system. \nDm <@${config.owner}> to get added/removed from the list.\n https://tenor.com/view/twenty-century-fox-meme-gfy-go-fuck-yourself-meme-get-lost-gif-26260205`})
+                        await newMember.user.send(`${audit.entries.first().executor.username} tried to change your nickname to **${newMember.nickname}** but got blocked by the nickname protection system.`)
+                    }
                 }
             }
+        } catch (error) {
+            console.log(error)
         }
     }
 }

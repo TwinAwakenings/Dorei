@@ -16,13 +16,13 @@ export default class nicknameProtectionAddCommand extends SubCommand {
         const user = interaction.options.getUser("user")
 
         const db = this.client.database.nicknameProtection
-        const exits = await db.findMany({where: {userId: user.id}})
+        const exits = await db.findMany({where: {userId: user.id, guildId: interaction.guild.id}})
 
         if (exits.length > 0) {
             return interaction.reply({ content: "This user is already in the list!", ephemeral: true })
         }
 
-        await db.create({data: {userId: user.id}}).then(() => {
+        await db.create({data: {userId: user.id, guildId: interaction.guild.id}}).then(() => {
             return interaction.reply({ content: "Added user to the list!", ephemeral: true })
         })
         

@@ -17,7 +17,7 @@ export default class nicknameProtectionRemoveCommand extends SubCommand {
         const user = interaction.options.getUser("user")
 
         const db = this.client.database.nicknameProtection
-        const exits = await db.findMany({where: {userId: user.id}})
+        const exits = await db.findMany({where: {userId: user.id, guildId: interaction.guild.id}})
 
         if (exits.length == 0) {
             return interaction.reply({ content: "This user is not on the list!", ephemeral: true })
