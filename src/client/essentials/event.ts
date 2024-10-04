@@ -15,7 +15,7 @@ export class Event implements IEvent {
         this.enabled = options.enabled ?? true
     }
 
-    async execute(...args: any)  {
+    execute(...args: any)  {
         
     }
 }

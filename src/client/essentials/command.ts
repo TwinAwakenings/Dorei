@@ -1,4 +1,4 @@
-import { PermissionFlagsBits, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, PermissionResolvable, PermissionsBitField, PermissionFlags, Activity, ActivityType } from "discord.js";
+import { PermissionFlagsBits, ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, PermissionResolvable, PermissionsBitField, PermissionFlags, Activity, ActivityType, ChannelType } from "discord.js";
 import { Category } from "../../enums/Category";
 import { shiro_Client, Ishiro_Client } from "../client";
 
@@ -65,8 +65,16 @@ export interface ICommandOptions {
     name: string
     description: string
     type: ApplicationCommandOptionType
-    required: boolean
+    required?: boolean | undefined
     autocomplete?: boolean | undefined
+    options?: {
+        name: string
+        description: string
+        type: ApplicationCommandOptionType
+        required?: boolean | undefined
+        channel_types?: ChannelType
+        autocomplete?: boolean | undefined
+    }[] | undefined
     choices?: {
         name: string
         value: string | ActivityType

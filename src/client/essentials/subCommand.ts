@@ -13,7 +13,7 @@ export default class SubCommand implements ISubCommand {
         this.enabled = options.enabled ?? true
     }
 
-    async execute(interaction: ChatInputCommandInteraction) {
+    execute(interaction: ChatInputCommandInteraction) {
         
     }
 }

@@ -14,3 +14,8 @@ model homeworkExists {
   homeWorkId String @id
   title      String
 }
+
+model nicknameProtection {
+  userId String @id
+  
+}

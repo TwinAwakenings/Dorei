@@ -14,7 +14,7 @@ export default class CommandHandler extends Event {
 
         })
     }
-    execute(interaction: ChatInputCommandInteraction | AutocompleteInteraction) {
+    async execute(interaction: ChatInputCommandInteraction | AutocompleteInteraction) {
         if (interaction.isChatInputCommand()) {
             //this.client.reloadConfig()
             const command: Command = this.client.commands.get(interaction.commandName)
@@ -63,17 +63,22 @@ export default class CommandHandler extends Event {
 
             
 
+        
             
-            
-            
-
             try {
                 const subCommandGroup = interaction.options.getSubcommandGroup(false)
                 const subCommand = `${interaction.commandName}${subCommandGroup ? `.${subCommandGroup}` : ""}.${interaction.options.getSubcommand(false) || ""}`
+            
+                const subCommandExec = this.client.subCommands.get(subCommand);
 
+                // Await subcommand if it exists
+                if (subCommandExec) {
+                    subCommandExec.execute(interaction);
+                }
 
-                //@ts-ignore
-                return command?.execute(interaction) || this.client.subcommands.get(subCommand)?.execute(interaction)
+                // Await main command execution
+                return command?.execute(interaction);
+                //return command?.execute(interaction) || this.client.subcommands?.get(subCommand)?.execute(interaction)
 
             } catch (e) {
                 console.error(e)
